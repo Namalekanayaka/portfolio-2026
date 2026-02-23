@@ -1,8 +1,8 @@
 'use client';
 
-import { useRef, useMemo } from 'react';
+import { useRef, useMemo, Suspense } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { Float, MeshDistortMaterial, Sphere, MeshWobbleMaterial, TorusKnot, Environment, ContactShadows } from '@react-three/drei';
+import { Float, MeshDistortMaterial, Sphere, MeshWobbleMaterial, TorusKnot, Environment, Preload } from '@react-three/drei';
 import * as THREE from 'three';
 
 const OrganicShape = ({ position, color, type, speed = 1, rotationSpeed = 1, distort = 0.4, factor = 0.4 }: any) => {
@@ -19,7 +19,7 @@ const OrganicShape = ({ position, color, type, speed = 1, rotationSpeed = 1, dis
     return (
         <group position={position}>
             {type === 'blob' && (
-                <Sphere ref={meshRef} args={[1, 64, 64]}>
+                <Sphere ref={meshRef} args={[1, 48, 48]}>
                     <MeshDistortMaterial
                         color={color}
                         speed={speed * 2}
@@ -31,7 +31,7 @@ const OrganicShape = ({ position, color, type, speed = 1, rotationSpeed = 1, dis
                 </Sphere>
             )}
             {type === 'wobble' && (
-                <Sphere ref={meshRef} args={[1, 64, 64]}>
+                <Sphere ref={meshRef} args={[1, 48, 48]}>
                     <MeshWobbleMaterial
                         color={color}
                         speed={speed}
@@ -42,7 +42,7 @@ const OrganicShape = ({ position, color, type, speed = 1, rotationSpeed = 1, dis
                 </Sphere>
             )}
             {type === 'metallic' && (
-                <TorusKnot ref={meshRef} args={[0.7, 0.3, 128, 32]}>
+                <TorusKnot ref={meshRef} args={[0.7, 0.3, 100, 24]}>
                     <meshStandardMaterial
                         color={color}
                         metalness={1}
@@ -52,7 +52,7 @@ const OrganicShape = ({ position, color, type, speed = 1, rotationSpeed = 1, dis
                 </TorusKnot>
             )}
             {type === 'soft' && (
-                <Sphere ref={meshRef} args={[1, 64, 64]}>
+                <Sphere ref={meshRef} args={[1, 48, 48]}>
                     <meshStandardMaterial
                         color={color}
                         roughness={0.8}
@@ -76,7 +76,7 @@ const Shapes = () => {
     ], []);
 
     return (
-        <>
+        <Suspense fallback={null}>
             <ambientLight intensity={0.5} />
             <pointLight position={[10, 10, 10]} intensity={2} />
             <spotLight position={[-10, 10, 10]} angle={0.15} penumbra={1} intensity={2} />
@@ -86,23 +86,31 @@ const Shapes = () => {
                 <Float
                     key={i}
                     speed={shape.speed * 2}
-                    rotationIntensity={1}
-                    floatIntensity={1}
+                    rotationIntensity={0.8}
+                    floatIntensity={0.8}
                 >
                     <OrganicShape {...shape} />
                 </Float>
             ))}
             <Environment preset="studio" />
-            <ContactShadows position={[0, -10, 0]} opacity={0.4} scale={20} blur={2.5} far={10} />
-        </>
+        </Suspense>
     );
 };
 
 export default function FloatingShapes() {
     return (
-        <div className="w-full h-full absolute inset-0 z-0 pointer-events-none opacity-80">
-            <Canvas camera={{ position: [0, 0, 12], fov: 45 }} gl={{ antialias: true, alpha: true }}>
+        <div className="w-full h-full absolute inset-0 z-0 pointer-events-none opacity-80 overflow-hidden">
+            <Canvas
+                camera={{ position: [0, 0, 12], fov: 45 }}
+                gl={{
+                    antialias: true,
+                    alpha: true,
+                    powerPreference: "high-performance"
+                }}
+                dpr={[1, 2]} // Balanced DPR for quality vs performance
+            >
                 <Shapes />
+                <Preload all />
             </Canvas>
         </div>
     );
