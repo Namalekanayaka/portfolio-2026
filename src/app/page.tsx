@@ -1,6 +1,5 @@
 import Hero from '@/components/hero/Hero';
 import IconTextMorph from '@/components/sections/IconTextMorph';
-import StickyProjects from '@/components/sections/StickyProjects';
 
 export default function Home() {
   return (
@@ -14,9 +13,6 @@ export default function Home() {
       <div className="rounded-[40px] overflow-hidden shadow-2xl">
         <IconTextMorph />
       </div>
-
-      {/* Sticky Stacking Projects */}
-      <StickyProjects />
 
       {/* Spacer for scroll demonstration */}
       <section className="h-screen flex items-center justify-center bg-white rounded-[40px] shadow-2xl">
