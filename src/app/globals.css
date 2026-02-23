@@ -20,6 +20,7 @@
 @layer base {
   * {
     @apply border-border/10;
+    scroll-behavior: smooth;
   }
 
   body {
