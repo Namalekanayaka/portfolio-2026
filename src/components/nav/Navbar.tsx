@@ -8,7 +8,7 @@ const Navbar = () => {
     const [copied, setCopied] = useState(false);
 
     const copyEmail = () => {
-        navigator.clipboard.writeText('hey@zenwood.studio');
+        navigator.clipboard.writeText('namalekanayake412@gmail.com');
         setCopied(true);
         setTimeout(() => setCopied(false), 2000);
     };
@@ -124,7 +124,7 @@ const Navbar = () => {
                             )}
                         </AnimatePresence>
                     </button>
-                    <span className="text-[13px] font-bold text-neutral-800">hey@zenwood.studio</span>
+                    <span className="text-[13px] font-bold text-neutral-800">namalekanayake412@gmail.com</span>
                 </motion.div>
 
             </div>
