@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useScroll, useTransform, useSpring } from 'framer-motion';
 import { Wifi, Lightbulb, Notebook, Code, Rocket, Cpu, User, Fingerprint, Sparkles } from 'lucide-react';
 
 function CircleIcon({ className }: { className?: string }) {
@@ -23,9 +23,60 @@ const aboutData = [
     { icon: Lightbulb, label: 'E', delay: 0.7 },
 ];
 
+const bioLines = [
+    "I'm a full-stack developer who transforms complex ideas into elegant digital solutions.",
+    "Passionate about creating immersive interfaces that feel alive and responsive.",
+    "Driven by precision, performance, and the pursuit of visual excellence.",
+    "Let's craft the future of the web, one pixel at a time."
+];
+
+const BioLine = ({ line, index, progress }: { line: string, index: number, progress: any }) => {
+    // Ultra-tight ranges for 130vh section
+    const start = 0.2 + (index * 0.2);
+    const end = start + 0.22;
+
+    const opacity = useTransform(progress, [start, start + 0.05, end - 0.05, end], [0, 1, 1, 0]);
+    const yTranslate = useTransform(progress, [start, end], [30, -30]);
+    const scale = useTransform(progress, [start, start + 0.05], [0.9, 1]);
+
+    return (
+        <motion.div
+            key={index}
+            style={{
+                opacity,
+                y: yTranslate,
+                scale
+            }}
+            className="absolute inset-0 flex items-center justify-center text-center px-6 pointer-events-none"
+        >
+            <p className="text-2xl md:text-5xl font-bold text-white leading-tight tracking-tighter max-w-4xl italic drop-shadow-2xl">
+                {line}
+            </p>
+        </motion.div>
+    );
+};
+
 const AboutMorph = () => {
     const [phase, setPhase] = useState<'hidden' | 'icons' | 'text'>('hidden');
     const containerRef = useRef<HTMLDivElement>(null);
+    const stickyRef = useRef<HTMLDivElement>(null);
+
+    const { scrollYProgress } = useScroll({
+        target: containerRef,
+        offset: ["start start", "end end"]
+    });
+
+    const smoothScroll = useSpring(scrollYProgress, {
+        stiffness: 300, // Ultra snappy
+        damping: 60,
+        restDelta: 0.001
+    });
+
+    // Extremely compact ranges for 130vh
+    const headerScale = useTransform(smoothScroll, [0.0, 0.2], [1, 0.45]);
+    const headerY = useTransform(smoothScroll, [0.0, 0.2], [0, -200]);
+    const headerOpacityValue = useTransform(smoothScroll, [0.0, 0.05, 0.9, 1.0], [0, 1, 1, 0]);
+    const sectionExitOpacity = useTransform(smoothScroll, [0.97, 1.0], [1, 0]);
 
     useEffect(() => {
         const observer = new IntersectionObserver(
@@ -34,11 +85,11 @@ const AboutMorph = () => {
                     setPhase('icons');
                     const timer = setTimeout(() => {
                         setPhase('text');
-                    }, 1800);
+                    }, 800); // Even faster morph to bio
                     return () => clearTimeout(timer);
                 }
             },
-            { threshold: 0.2 }
+            { threshold: 0.1 }
         );
 
         if (containerRef.current) observer.observe(containerRef.current);
@@ -49,72 +100,80 @@ const AboutMorph = () => {
         <section
             ref={containerRef}
             id="about"
-            className="relative min-h-[100vh] w-full bg-black flex flex-col items-center justify-center overflow-hidden py-32 gpu"
+            className="relative h-[130vh] w-full bg-black flex flex-col items-center overflow-visible gpu"
         >
             <div className="absolute inset-0 noise opacity-[0.03] pointer-events-none" />
 
-            <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-white/5 rounded-full blur-[100px]" />
-            </div>
+            {/* Sticky Wrapper */}
+            <motion.div
+                style={{ opacity: sectionExitOpacity }}
+                className="sticky top-0 h-screen w-full flex flex-col items-center justify-center overflow-hidden"
+            >
+                <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-white/5 rounded-full blur-[100px]" />
+                </div>
 
-            <div className="container mx-auto px-6 relative z-10">
-                <div className="flex flex-col items-center gap-16">
-
-                    <div className="flex flex-wrap items-center justify-center gap-4 md:gap-8">
-                        {aboutData.map((item, index) => {
-                            if (item.isSpace) return <div key={index} className="w-10 md:w-20" />;
-
-                            const IconComp = item.icon || Sparkles;
-
-                            return (
-                                <div key={index} className="relative flex items-center justify-center w-20 h-20 md:w-32 md:h-32">
-                                    <AnimatePresence mode="wait">
-                                        {phase === 'icons' && (
-                                            <motion.div
-                                                key="icon"
-                                                initial={{ scale: 0.8, opacity: 0 }}
-                                                animate={{ scale: 1, opacity: 1 }}
-                                                exit={{ scale: 1.2, opacity: 0, filter: 'blur(10px)' }}
-                                                transition={{ duration: 0.6, delay: item.delay }}
-                                                className="absolute"
-                                            >
-                                                <IconComp className="w-10 h-10 md:w-16 md:h-16 text-white/30" />
-                                            </motion.div>
-                                        )}
-
-                                        {phase === 'text' && (
-                                            <motion.div
-                                                key="text"
-                                                initial={{ scale: 0.8, opacity: 0, filter: 'blur(15px)' }}
-                                                animate={{ scale: 1, opacity: 1, filter: 'blur(0px)' }}
-                                                transition={{ duration: 0.8, delay: item.delay }}
-                                                className="absolute"
-                                            >
-                                                <span className="text-7xl md:text-[9rem] font-black text-white tracking-tighter uppercase select-none">
-                                                    {item.label}
-                                                </span>
-                                            </motion.div>
-                                        )}
-                                    </AnimatePresence>
-                                </div>
-                            );
-                        })}
-                    </div>
-
+                <div className="relative w-full h-full flex items-center justify-center">
+                    {/* Animated "ABOUT ME" Header - Absolutely centered */}
                     <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={phase === 'text' ? { opacity: 1 } : { opacity: 0 }}
-                        className="text-center"
+                        style={{ scale: headerScale, y: headerY, opacity: headerOpacityValue }}
+                        className="absolute flex flex-col items-center z-20"
                     >
-                        <p className="text-white/40 text-lg md:text-xl font-medium tracking-tight">
-                            Building digital products with <span className="text-white">precision</span>.
-                        </p>
+                        <div className="flex flex-wrap items-center justify-center gap-4 md:gap-8 max-w-[90vw]">
+                            {aboutData.map((item, index) => {
+                                if (item.isSpace) return <div key={index} className="w-8 md:w-16" />;
+                                const IconComp = item.icon || Sparkles;
+                                return (
+                                    <div key={index} className="relative flex items-center justify-center w-16 h-16 md:w-24 md:h-24">
+                                        <AnimatePresence mode="wait">
+                                            {phase === 'icons' && (
+                                                <motion.div
+                                                    key="icon"
+                                                    initial={{ scale: 0.8, opacity: 0 }}
+                                                    animate={{ scale: 1, opacity: 1 }}
+                                                    exit={{ scale: 1.2, opacity: 0, filter: 'blur(10px)' }}
+                                                    transition={{ duration: 0.5, delay: item.delay }}
+                                                    className="absolute"
+                                                >
+                                                    <IconComp className="w-8 h-8 md:w-12 md:h-12 text-white/30" />
+                                                </motion.div>
+                                            )}
+                                            {phase === 'text' && (
+                                                <motion.div
+                                                    key="text"
+                                                    initial={{ scale: 0.8, opacity: 0, filter: 'blur(15px)' }}
+                                                    animate={{ scale: 1, opacity: 1, filter: 'blur(0px)' }}
+                                                    transition={{ duration: 0.6, delay: item.delay }}
+                                                    className="absolute"
+                                                >
+                                                    <span className="text-5xl md:text-[7rem] font-black text-white tracking-tighter uppercase select-none">
+                                                        {item.label}
+                                                    </span>
+                                                </motion.div>
+                                            )}
+                                        </AnimatePresence>
+                                    </div>
+                                );
+                            })}
+                        </div>
                     </motion.div>
 
+                    {/* Bio Scroll Section - Also absolutely centered */}
+                    <div className="absolute inset-0 flex items-center justify-center z-30">
+                        {bioLines.map((line, index) => (
+                            <BioLine
+                                key={index}
+                                line={line}
+                                index={index}
+                                progress={smoothScroll}
+                            />
+                        ))}
+                    </div>
                 </div>
-            </div>
+            </motion.div>
         </section>
     );
 };
 
 export default AboutMorph;
+
