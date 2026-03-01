@@ -1,6 +1,5 @@
 import Hero from '@/components/hero/Hero';
 import IconTextMorph from '@/components/sections/IconTextMorph';
-import StickyProjects from '@/components/sections/StickyProjects';
 
 export default function Home() {
   return (
@@ -15,8 +14,6 @@ export default function Home() {
         <IconTextMorph />
       </div>
 
-      {/* Advanced Projects Grid Section */}
-      <StickyProjects />
     </main>
   );
 }
