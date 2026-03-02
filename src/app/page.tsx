@@ -1,5 +1,6 @@
 import Hero from '@/components/hero/Hero';
 import IconTextMorph from '@/components/sections/IconTextMorph';
+import PortfolioProjects from '@/components/sections/PortfolioProjects';
 
 export default function Home() {
   return (
@@ -10,8 +11,13 @@ export default function Home() {
       </div>
 
       {/* About Animation Section */}
-      <div className="rounded-[10vw] overflow-hidden shadow-2xl">
+      <div className="overflow-hidden shadow-2xl">
         <IconTextMorph />
+      </div>
+
+      {/* Projects Section */}
+      <div className="overflow-hidden shadow-2xl bg-[#050505] -mx-6 md:mx-0">
+        <PortfolioProjects />
       </div>
 
     </main>

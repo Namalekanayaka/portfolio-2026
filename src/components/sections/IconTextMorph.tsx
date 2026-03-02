@@ -47,7 +47,7 @@ const BioLine = ({ line, index, progress }: { line: string, index: number, progr
             }}
             className="absolute inset-0 flex items-center justify-center text-center px-4 md:px-20 pointer-events-none"
         >
-            <p className="text-2xl md:text-7xl font-black text-white leading-tight tracking-tighter max-w-6xl italic drop-shadow-2xl">
+            <p className="text-2xl md:text-7xl font-black text-white leading-tight tracking-tighter max-w-6xl drop-shadow-2xl font-display uppercase">
                 {line}
             </p>
         </motion.div>
@@ -111,7 +111,7 @@ const AboutMorph = () => {
             >
                 {/* Background Glow */}
                 <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-white/5 rounded-full blur-[100px]" />
+                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-white/5 to-transparent rounded-full" />
                 </div>
 
                 {/* Animated "ABOUT ME" Header */}
@@ -131,7 +131,7 @@ const AboutMorph = () => {
                                                 key="icon"
                                                 initial={{ scale: 0.8, opacity: 0 }}
                                                 animate={{ scale: 1, opacity: 1 }}
-                                                exit={{ scale: 1.2, opacity: 0, filter: 'blur(10px)' }}
+                                                exit={{ scale: 1.2, opacity: 0 }}
                                                 transition={{ duration: 0.5, delay: item.delay }}
                                                 className="absolute"
                                             >
@@ -141,12 +141,12 @@ const AboutMorph = () => {
                                         {phase === 'text' && (
                                             <motion.div
                                                 key="text"
-                                                initial={{ scale: 0.8, opacity: 0, filter: 'blur(15px)' }}
-                                                animate={{ scale: 1, opacity: 1, filter: 'blur(0px)' }}
+                                                initial={{ scale: 0.8, opacity: 0 }}
+                                                animate={{ scale: 1, opacity: 1 }}
                                                 transition={{ duration: 0.6, delay: item.delay }}
                                                 className="absolute"
                                             >
-                                                <span className="text-3xl md:text-[7rem] font-black text-white tracking-tighter uppercase select-none">
+                                                <span className="text-3xl md:text-[7rem] font-black text-white tracking-tighter uppercase select-none font-display">
                                                     {item.label}
                                                 </span>
                                             </motion.div>

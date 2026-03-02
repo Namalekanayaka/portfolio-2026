@@ -19,7 +19,7 @@ const OrganicShape = ({ position, color, type, speed = 1, rotationSpeed = 1, dis
     return (
         <group position={position}>
             {type === 'blob' && (
-                <Sphere ref={meshRef} args={[1, 48, 48]}>
+                <Sphere ref={meshRef} args={[1, 32, 32]}>
                     <MeshDistortMaterial
                         color={color}
                         speed={speed * 2}
@@ -31,7 +31,7 @@ const OrganicShape = ({ position, color, type, speed = 1, rotationSpeed = 1, dis
                 </Sphere>
             )}
             {type === 'wobble' && (
-                <Sphere ref={meshRef} args={[1, 48, 48]}>
+                <Sphere ref={meshRef} args={[1, 32, 32]}>
                     <MeshWobbleMaterial
                         color={color}
                         speed={speed}
@@ -42,7 +42,7 @@ const OrganicShape = ({ position, color, type, speed = 1, rotationSpeed = 1, dis
                 </Sphere>
             )}
             {type === 'metallic' && (
-                <TorusKnot ref={meshRef} args={[0.7, 0.3, 100, 24]}>
+                <TorusKnot ref={meshRef} args={[0.7, 0.3, 64, 16]}>
                     <meshStandardMaterial
                         color={color}
                         metalness={1}
@@ -52,7 +52,7 @@ const OrganicShape = ({ position, color, type, speed = 1, rotationSpeed = 1, dis
                 </TorusKnot>
             )}
             {type === 'soft' && (
-                <Sphere ref={meshRef} args={[1, 48, 48]}>
+                <Sphere ref={meshRef} args={[1, 32, 32]}>
                     <meshStandardMaterial
                         color={color}
                         roughness={0.8}
@@ -107,11 +107,12 @@ export default function FloatingShapes() {
                     alpha: true,
                     powerPreference: "high-performance"
                 }}
-                dpr={[1, 2]} // Balanced DPR for quality vs performance
+                dpr={[1, 1.5]} // Capped DPR at 1.5 for performance
+                performance={{ min: 0.5 }} // Allows performance scaling
             >
                 <Shapes />
                 <Preload all />
             </Canvas>
-        </div>
+        </div >
     );
 }

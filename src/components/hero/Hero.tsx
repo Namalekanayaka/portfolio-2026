@@ -43,16 +43,18 @@ export default function Hero() {
     };
 
     return (
-        <motion.section
+        <section
             ref={containerRef}
-            style={{ scale: smoothScale }}
-            className="relative min-h-screen w-full flex flex-col bg-background selection:bg-purple-200"
+            className="relative min-h-screen w-full flex flex-col bg-background selection:bg-purple-200 overflow-hidden"
         >
 
             <div className="noise pointer-events-none" />
             <FloatingShapes />
 
-            <div className="flex-1 container mx-auto px-6 md:px-12 flex flex-col justify-center relative z-10 pt-20">
+            <motion.div
+                style={{ scale: smoothScale }}
+                className="flex-1 container mx-auto px-6 md:px-12 flex flex-col justify-center relative z-10 pt-20"
+            >
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-end">
                     {/* Main Headline */}
                     <motion.div
@@ -95,7 +97,7 @@ export default function Hero() {
                         </button>
                     </motion.div>
                 </div>
-            </div>
+            </motion.div>
 
             {/* Footer hint */}
             <motion.div
@@ -105,6 +107,6 @@ export default function Hero() {
                 <span className="text-[10px] uppercase tracking-[0.3em] font-bold text-foreground/30">Scroll to Explore</span>
                 <div className="w-px h-16 bg-gradient-to-b from-foreground/20 to-transparent" />
             </motion.div>
-        </motion.section>
+        </section>
     );
 }
