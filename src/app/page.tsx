@@ -1,25 +1,30 @@
 import Hero from '@/components/hero/Hero';
 import IconTextMorph from '@/components/sections/IconTextMorph';
 import PortfolioProjects from '@/components/sections/PortfolioProjects';
+import FloatingShapes from '@/components/hero/FloatingShapes';
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-[#0a0a0b] flex flex-col gap-6 p-6">
+    <main className="min-h-screen bg-black flex flex-col relative w-full">
+      {/* Persisted Original 3D Shapes across Hero and About sections */}
+      <div className="fixed inset-0 z-[15] pointer-events-none">
+        <FloatingShapes />
+      </div>
+
       {/* Hero section */}
-      <div className="-m-6 mb-0">
+      <div className="w-full relative z-10">
         <Hero />
       </div>
 
       {/* About Animation Section */}
-      <div className="overflow-hidden shadow-2xl">
+      <div className="w-full relative z-10">
         <IconTextMorph />
       </div>
 
       {/* Projects Section */}
-      <div className="overflow-hidden shadow-2xl bg-[#050505] -mx-6 md:mx-0">
+      <div className="w-full relative z-20 bg-white">
         <PortfolioProjects />
       </div>
-
     </main>
   );
 }

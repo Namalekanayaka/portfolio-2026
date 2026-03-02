@@ -2,7 +2,6 @@
 
 import { motion, useScroll, useTransform, useSpring, Variants } from 'framer-motion';
 import { useRef } from 'react';
-import FloatingShapes from './FloatingShapes';
 import { ArrowRight } from 'lucide-react';
 
 export default function Hero() {
@@ -45,11 +44,10 @@ export default function Hero() {
     return (
         <section
             ref={containerRef}
-            className="relative min-h-screen w-full flex flex-col bg-background selection:bg-purple-200 overflow-hidden"
+            className="relative min-h-screen w-full flex flex-col bg-[#f5f5f7] selection:bg-purple-200 overflow-hidden"
         >
 
             <div className="noise pointer-events-none" />
-            <FloatingShapes />
 
             <motion.div
                 style={{ scale: smoothScale }}
@@ -71,7 +69,7 @@ export default function Hero() {
 
                         <motion.h1
                             style={{ y: smoothY }}
-                            className="text-[clamp(3.5rem,10vw,9.5rem)] font-bold tracking-tight leading-[0.9] text-foreground select-none overflow-visible"
+                            className="text-[clamp(3.5rem,10vw,9.5rem)] font-bold tracking-tight leading-[0.9] text-black select-none overflow-visible"
                         >
                             <motion.span variants={itemVariants} className="block">Namal</motion.span>
                             <motion.span variants={itemVariants} className="block">
@@ -87,11 +85,11 @@ export default function Hero() {
                         transition={{ delay: 1, duration: 1.2, ease: "easeOut" }}
                         className="lg:col-span-4 flex flex-col items-start gap-8 pb-10"
                     >
-                        <p className="text-lg md:text-xl text-foreground/70 leading-relaxed font-medium max-w-sm">
+                        <p className="text-lg md:text-xl text-black/70 leading-relaxed font-medium max-w-sm">
                             Namal Ekanayake is building high-performance software that redefines how users interact with the digital world.
                         </p>
 
-                        <button className="group flex items-center gap-3 font-bold text-lg hover:gap-5 transition-all">
+                        <button className="group flex items-center gap-3 font-bold text-lg text-black hover:gap-5 transition-all">
                             Learn about my process
                             <ArrowRight className="w-5 h-5 group-hover:text-indigo-600 transition-colors" />
                         </button>
@@ -104,8 +102,8 @@ export default function Hero() {
                 style={{ opacity }}
                 className="absolute bottom-10 left-1/2 -translate-x-1/2 hidden md:flex flex-col items-center gap-3"
             >
-                <span className="text-[10px] uppercase tracking-[0.3em] font-bold text-foreground/30">Scroll to Explore</span>
-                <div className="w-px h-16 bg-gradient-to-b from-foreground/20 to-transparent" />
+                <span className="text-[10px] uppercase tracking-[0.3em] font-bold text-black/30">Scroll to Explore</span>
+                <div className="w-px h-16 bg-gradient-to-b from-black/20 to-transparent" />
             </motion.div>
         </section>
     );

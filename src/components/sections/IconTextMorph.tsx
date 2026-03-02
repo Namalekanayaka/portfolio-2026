@@ -23,41 +23,14 @@ const aboutData = [
     { icon: Lightbulb, label: 'E', delay: 0.7 },
 ];
 
-const bioLines = [
-    "I'm a full-stack developer who transforms complex ideas into elegant digital solutions.",
-    "Passionate about creating immersive interfaces that feel alive and responsive.",
-    "Driven by precision, performance, and the pursuit of visual excellence.",
-    "Let's craft the future of the web, one pixel at a time."
+const bioParagraphs = [
+    "Hello! I'm Namal Ekanayake, a passionate software engineer and full stack web developer with hands-on experience building modern web applications using React.js, Node.js, and related technologies. I enjoy creating clean, responsive, and user-friendly interfaces while ensuring strong and reliable backend functionality.",
+    "As a freelancer, I have worked on practical projects including portfolio websites, management systems, and interactive web applications, turning ideas into efficient and scalable digital solutions. I am especially interested in Artificial Intelligence and emerging technologies, and I continuously focus on improving my problem-solving abilities and development skills to grow as a well-rounded software engineer."
 ];
-
-const BioLine = ({ line, index, progress }: { line: string, index: number, progress: any }) => {
-    // Ranges centered around 0.5 (the middle of the viewport journey for 100vh)
-    const step = 0.08;
-    const start = 0.45 + (index * step);
-    const end = start + step;
-
-    const opacity = useTransform(progress, [start, start + 0.02, end - 0.02, end], [0, 1, 1, 0]);
-    const scale = useTransform(progress, [start, start + 0.02], [0.95, 1]);
-
-    return (
-        <motion.div
-            style={{
-                opacity,
-                scale
-            }}
-            className="absolute inset-0 flex items-center justify-center text-center px-4 md:px-20 pointer-events-none"
-        >
-            <p className="text-2xl md:text-7xl font-black text-white leading-tight tracking-tighter max-w-6xl drop-shadow-2xl font-display uppercase">
-                {line}
-            </p>
-        </motion.div>
-    );
-};
 
 const AboutMorph = () => {
     const [phase, setPhase] = useState<'hidden' | 'icons' | 'text'>('hidden');
     const containerRef = useRef<HTMLDivElement>(null);
-    const stickyRef = useRef<HTMLDivElement>(null);
 
     const { scrollYProgress } = useScroll({
         target: containerRef,
@@ -65,18 +38,22 @@ const AboutMorph = () => {
     });
 
     const smoothScroll = useSpring(scrollYProgress, {
-        stiffness: 150, // Smoother, more natural speed
+        stiffness: 150,
         damping: 35,
         restDelta: 0.001
     });
 
-    // Balanced ranges for 100vh viewport journey
-    // Adjusting Y-offset for mobile to be less aggressive
     const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
-    const headerScale = useTransform(smoothScroll, [0.35, 0.45], [1, 0.5]);
-    const headerY = useTransform(smoothScroll, [0.35, 0.45], [isMobile ? -60 : -150, isMobile ? -140 : -300]);
-    const headerOpacityValue = useTransform(smoothScroll, [0.3, 0.35, 0.45, 0.5], [0, 1, 1, 0]);
-    const sectionExitOpacity = useTransform(smoothScroll, [0.8, 1.0], [1, 0]);
+
+    const headerScale = useTransform(smoothScroll, [0.45, 0.6], [1, isMobile ? 0.7 : 0.85]);
+    const headerY = useTransform(smoothScroll, [0.45, 0.6], [0, isMobile ? -160 : -220]);
+
+    // Header comes in early, fades out as section leaves
+    const headerOpacityValue = useTransform(smoothScroll, [0.35, 0.45, 0.7, 0.85], [0, 1, 1, 0]);
+
+    // Bio fades in as header moves up
+    const bioOpacity = useTransform(smoothScroll, [0.55, 0.65, 0.7, 0.85], [0, 1, 1, 0]);
+    const bioY = useTransform(smoothScroll, [0.55, 0.65], [40, 0]);
 
     useEffect(() => {
         const observer = new IntersectionObserver(
@@ -85,11 +62,11 @@ const AboutMorph = () => {
                     setPhase('icons');
                     const timer = setTimeout(() => {
                         setPhase('text');
-                    }, 800); // Even faster morph to bio
+                    }, 800);
                     return () => clearTimeout(timer);
                 }
             },
-            { threshold: 0.1 }
+            { threshold: 0.3 }
         );
 
         if (containerRef.current) observer.observe(containerRef.current);
@@ -100,31 +77,29 @@ const AboutMorph = () => {
         <section
             ref={containerRef}
             id="about"
-            className="relative h-[100vh] w-full bg-black overflow-hidden gpu"
+            className="relative h-[120vh] w-full bg-black overflow-hidden gpu"
         >
             <div className="absolute inset-0 noise opacity-[0.03] pointer-events-none" />
 
-            {/* Content Container - No sticky needed for single screen journey */}
-            <motion.div
-                style={{ opacity: sectionExitOpacity }}
-                className="relative h-full w-full flex items-center justify-center"
-            >
+            {/* Sticky Container */}
+            <div className="sticky top-0 h-[100vh] w-full flex flex-col items-center justify-center overflow-hidden">
+
                 {/* Background Glow */}
-                <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
                     <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-white/5 to-transparent rounded-full" />
                 </div>
 
                 {/* Animated "ABOUT ME" Header */}
                 <motion.div
                     style={{ scale: headerScale, y: headerY, opacity: headerOpacityValue }}
-                    className="absolute z-20 flex flex-col items-center"
+                    className="absolute z-20 flex flex-col items-center justify-center w-full"
                 >
-                    <div className="flex flex-nowrap items-center justify-center gap-1.5 md:gap-8 max-w-[95vw]">
+                    <div className="flex flex-nowrap items-center justify-center gap-1.5 md:gap-4 max-w-[95vw]">
                         {aboutData.map((item, index) => {
-                            if (item.isSpace) return <div key={index} className="w-2 md:w-16" />;
+                            if (item.isSpace) return <div key={index} className="w-2 md:w-8" />;
                             const IconComp = item.icon || Sparkles;
                             return (
-                                <div key={index} className="relative flex items-center justify-center w-8 h-8 md:w-24 md:h-24">
+                                <div key={index} className="relative flex items-center justify-center w-9 h-9 md:w-20 md:h-20 lg:w-28 lg:h-28">
                                     <AnimatePresence mode="wait">
                                         {phase === 'icons' && (
                                             <motion.div
@@ -135,7 +110,7 @@ const AboutMorph = () => {
                                                 transition={{ duration: 0.5, delay: item.delay }}
                                                 className="absolute"
                                             >
-                                                <IconComp className="w-4 h-4 md:w-12 md:h-12 text-white/30" />
+                                                <IconComp className="w-5 h-5 md:w-10 md:h-10 text-white/30" />
                                             </motion.div>
                                         )}
                                         {phase === 'text' && (
@@ -146,7 +121,7 @@ const AboutMorph = () => {
                                                 transition={{ duration: 0.6, delay: item.delay }}
                                                 className="absolute"
                                             >
-                                                <span className="text-3xl md:text-[7rem] font-black text-white tracking-tighter uppercase select-none font-display">
+                                                <span className="text-[3rem] sm:text-7xl lg:text-[9rem] font-black text-white tracking-tighter uppercase select-none font-display leading-none">
                                                     {item.label}
                                                 </span>
                                             </motion.div>
@@ -158,21 +133,25 @@ const AboutMorph = () => {
                     </div>
                 </motion.div>
 
-                {/* Bio Scroll Section */}
-                <div className="absolute inset-0 flex items-center justify-center z-30">
-                    {bioLines.map((line, index) => (
-                        <BioLine
-                            key={index}
-                            line={line}
-                            index={index}
-                            progress={smoothScroll}
-                        />
-                    ))}
-                </div>
-            </motion.div>
+                {/* Bio Paragraphs */}
+                <motion.div
+                    style={{ opacity: bioOpacity, y: bioY }}
+                    className="absolute z-30 flex flex-col items-center justify-center top-1/2 mt-[20px] md:mt-[40px] px-6 w-full max-w-4xl mx-auto"
+                >
+                    <div className="flex flex-col gap-6 md:gap-8 text-center px-4 md:px-8">
+                        {bioParagraphs.map((text, idx) => (
+                            <p
+                                key={idx}
+                                className="text-[14px] md:text-[15px] lg:text-[17px] font-medium text-[#c0c0c0] leading-[1.8] tracking-tight text-pretty"
+                            >
+                                {text}
+                            </p>
+                        ))}
+                    </div>
+                </motion.div>
+            </div>
         </section>
     );
 };
 
 export default AboutMorph;
-

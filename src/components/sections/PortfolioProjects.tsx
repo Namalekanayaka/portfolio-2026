@@ -60,7 +60,7 @@ export default function PortfolioProjects() {
     };
 
     return (
-        <section className="bg-[#050505] text-white w-full overflow-hidden py-24 md:py-32 flex flex-col items-center">
+        <section className="bg-white text-black w-full overflow-hidden py-24 md:py-32 flex flex-col items-center">
 
             {/* Header Title with letter animation if desired, just simple opacity zoom for now */}
             <motion.div
@@ -70,7 +70,7 @@ export default function PortfolioProjects() {
                 transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
                 className="w-full flex justify-center items-center mb-16 md:mb-24 px-6"
             >
-                <h2 className="text-2xl md:text-3xl font-display tracking-[0.2em] font-bold opacity-90 text-white drop-shadow-sm uppercase">PROJECTS</h2>
+                <h2 className="text-2xl md:text-3xl font-display tracking-[0.2em] font-bold opacity-90 text-black uppercase">PROJECTS</h2>
             </motion.div>
 
             <div className="w-full max-w-[1800px] flex flex-col gap-24 md:gap-32 px-6 md:px-12 lg:px-20 mx-auto">
@@ -81,7 +81,7 @@ export default function PortfolioProjects() {
                         viewport={{ once: true, margin: "-10%" }}
                         transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
                         key={idx}
-                        className={`flex flex-col ${idx !== 0 ? 'border-t border-white/5 pt-16 md:pt-24' : ''}`}
+                        className={`flex flex-col ${idx !== 0 ? 'pt-16 md:pt-24' : ''}`}
                     >
 
                         {/* Tags */}
@@ -93,7 +93,7 @@ export default function PortfolioProjects() {
                                     viewport={{ once: true }}
                                     transition={{ duration: 0.4, delay: tagIdx * 0.1, ease: 'easeOut' }}
                                     key={tagIdx}
-                                    className="px-4 py-[6px] rounded-full border border-white/[0.12] text-[12px] md:text-[13px] font-medium text-white/70 bg-[#1c1c1e]/60 tracking-wide backdrop-blur-md"
+                                    className="px-4 py-[6px] rounded-full border border-black/[0.08] text-[12px] md:text-[13px] font-medium text-black/70 bg-black/5 tracking-wide backdrop-blur-md"
                                 >
                                     {tag}
                                 </motion.span>
@@ -109,8 +109,8 @@ export default function PortfolioProjects() {
                                 variants={titleVariants}
                                 className="lg:col-span-6 pr-0 lg:pr-12"
                             >
-                                <h3 className="text-2xl md:text-3xl lg:text-[2.2rem] leading-[1.3] text-[#cfcfcf] tracking-tight text-pretty">
-                                    <strong className="font-semibold text-white drop-shadow-sm">{project.titleBold}</strong>
+                                <h3 className="text-2xl md:text-3xl lg:text-[2.2rem] leading-[1.3] text-neutral-500 tracking-tight text-pretty">
+                                    <strong className="font-semibold text-black">{project.titleBold}</strong>
                                     {project.titleLight}
                                 </h3>
                             </motion.div>
@@ -121,7 +121,7 @@ export default function PortfolioProjects() {
                                 transition={{ duration: 0.7, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
                                 className="lg:col-span-3"
                             >
-                                <p className="text-[14px] md:text-[15px] leading-[1.65] text-[#909090] font-medium text-pretty">
+                                <p className="text-[14px] md:text-[15px] leading-[1.65] text-neutral-600 font-medium text-pretty">
                                     {project.text1}
                                 </p>
                             </motion.div>
@@ -132,7 +132,7 @@ export default function PortfolioProjects() {
                                 transition={{ duration: 0.7, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
                                 className="lg:col-span-3"
                             >
-                                <p className="text-[14px] md:text-[15px] leading-[1.65] text-[#909090] font-medium text-pretty">
+                                <p className="text-[14px] md:text-[15px] leading-[1.65] text-neutral-600 font-medium text-pretty">
                                     {project.text2}
                                 </p>
                             </motion.div>
@@ -195,7 +195,7 @@ export default function PortfolioProjects() {
                                     )}
 
                                     {/* Image Container */}
-                                    <div className={`h-full relative rounded-xl overflow-hidden bg-white/5 border border-white/5 shadow-2xl ${img.aspect} group cursor-pointer`}>
+                                    <div className={`h-full relative rounded-xl overflow-hidden bg-black/5 border border-black/5 shadow-2xl ${img.aspect} group cursor-pointer`}>
                                         <div className="absolute inset-0 bg-black/20 z-10 group-hover:bg-transparent transition-colors duration-500" />
                                         <img
                                             src={img.src}
