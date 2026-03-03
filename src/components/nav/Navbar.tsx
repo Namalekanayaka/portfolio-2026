@@ -1,12 +1,30 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { TreeDeciduous, Copy, Check } from 'lucide-react';
+import { TreeDeciduous, Copy, Check, Download } from 'lucide-react';
 
 const Navbar = () => {
     const [copied, setCopied] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const [isProjectsSection, setIsProjectsSection] = useState(false);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            const projectsEl = document.getElementById('projects');
+            if (projectsEl) {
+                if (window.scrollY > projectsEl.offsetTop - window.innerHeight / 2) {
+                    setIsProjectsSection(true);
+                } else {
+                    setIsProjectsSection(false);
+                }
+            }
+        };
+
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        handleScroll();
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
 
     const copyEmail = () => {
         navigator.clipboard.writeText('namalekanayake412@gmail.com');
@@ -17,6 +35,7 @@ const Navbar = () => {
     const navLinks = [
         { name: 'Home', href: '/' },
         { name: 'About me', href: '#about' },
+        { name: 'Projects', href: '#projects' },
         { name: 'Contact', href: '#contact' },
     ];
 
@@ -80,54 +99,83 @@ const Navbar = () => {
                     </button>
                 </motion.div>
 
-                {/* Right Pill: Contact */}
+                {/* Right Pill: Contact or Resume */}
                 <motion.div
                     initial={{ opacity: 0, x: 20, filter: 'blur(10px)' }}
                     animate={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
                     transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
-                    className="hidden sm:flex items-center gap-3 bg-white pl-2 pr-5 py-1.5 rounded-full shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-neutral-100/50 group"
+                    className="hidden sm:flex items-center"
                 >
-                    <button
-                        onClick={copyEmail}
-                        className="p-2.5 hover:bg-neutral-50 rounded-full transition-colors relative group/btn"
-                    >
-                        <AnimatePresence mode="wait">
-                            {copied ? (
-                                <motion.div
-                                    key="check"
-                                    initial={{ scale: 0.5, opacity: 0 }}
-                                    animate={{ scale: 1, opacity: 1 }}
-                                    exit={{ scale: 0.5, opacity: 0 }}
+                    <AnimatePresence mode="wait">
+                        {!isProjectsSection ? (
+                            <motion.div
+                                key="contact"
+                                initial={{ opacity: 0, y: 10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{ opacity: 0, y: -10 }}
+                                transition={{ duration: 0.2 }}
+                                className="flex items-center gap-3 bg-white pl-2 pr-5 py-1.5 rounded-full shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-neutral-100/50 group"
+                            >
+                                <button
+                                    onClick={copyEmail}
+                                    className="p-2.5 hover:bg-neutral-50 rounded-full transition-colors relative group/btn"
                                 >
-                                    <Check className="w-3.5 h-3.5 text-emerald-500" />
-                                </motion.div>
-                            ) : (
-                                <motion.div
-                                    key="copy"
-                                    initial={{ scale: 0.5, opacity: 0 }}
-                                    animate={{ scale: 1, opacity: 1 }}
-                                    exit={{ scale: 0.5, opacity: 0 }}
-                                >
-                                    <Copy className="w-3.5 h-3.5 text-neutral-400 group-hover:text-black transition-colors" />
-                                </motion.div>
-                            )}
-                        </AnimatePresence>
+                                    <AnimatePresence mode="wait">
+                                        {copied ? (
+                                            <motion.div
+                                                key="check"
+                                                initial={{ scale: 0.5, opacity: 0 }}
+                                                animate={{ scale: 1, opacity: 1 }}
+                                                exit={{ scale: 0.5, opacity: 0 }}
+                                            >
+                                                <Check className="w-3.5 h-3.5 text-emerald-500" />
+                                            </motion.div>
+                                        ) : (
+                                            <motion.div
+                                                key="copy"
+                                                initial={{ scale: 0.5, opacity: 0 }}
+                                                animate={{ scale: 1, opacity: 1 }}
+                                                exit={{ scale: 0.5, opacity: 0 }}
+                                            >
+                                                <Copy className="w-3.5 h-3.5 text-neutral-400 group-hover:text-black transition-colors" />
+                                            </motion.div>
+                                        )}
+                                    </AnimatePresence>
 
-                        {/* Tooltip */}
-                        <AnimatePresence>
-                            {copied && (
-                                <motion.div
-                                    initial={{ opacity: 0, y: 10, x: '-50%' }}
-                                    animate={{ opacity: 1, y: 0, x: '-50%' }}
-                                    exit={{ opacity: 0, y: 10, x: '-50%' }}
-                                    className="absolute top-full mt-2 left-1/2 px-3 py-1 bg-black text-white text-[10px] rounded flex items-center justify-center whitespace-nowrap pointer-events-none font-bold"
-                                >
-                                    COPIED!
-                                </motion.div>
-                            )}
-                        </AnimatePresence>
-                    </button>
-                    <span className="text-[13px] font-bold text-neutral-800">namalekanayake412@gmail.com</span>
+                                    {/* Tooltip */}
+                                    <AnimatePresence>
+                                        {copied && (
+                                            <motion.div
+                                                initial={{ opacity: 0, y: 10, x: '-50%' }}
+                                                animate={{ opacity: 1, y: 0, x: '-50%' }}
+                                                exit={{ opacity: 0, y: 10, x: '-50%' }}
+                                                className="absolute top-full mt-2 left-1/2 px-3 py-1 bg-black text-white text-[10px] rounded flex items-center justify-center whitespace-nowrap pointer-events-none font-bold"
+                                            >
+                                                COPIED!
+                                            </motion.div>
+                                        )}
+                                    </AnimatePresence>
+                                </button>
+                                <span className="text-[13px] font-bold text-neutral-800">namalekanayake412@gmail.com</span>
+                            </motion.div>
+                        ) : (
+                            <motion.a
+                                key="resume"
+                                href="/resume.pdf"
+                                download="Namal_Ekanayake_Resume.pdf"
+                                initial={{ opacity: 0, y: 10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{ opacity: 0, y: -10 }}
+                                transition={{ duration: 0.2 }}
+                                className="flex items-center gap-3 bg-white pl-2 pr-5 py-1.5 rounded-full shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-neutral-100/50 group cursor-pointer hover:bg-neutral-50"
+                            >
+                                <div className="p-2.5 rounded-full transition-colors relative group/btn">
+                                    <Download className="w-3.5 h-3.5 text-neutral-400 group-hover:text-black transition-colors" />
+                                </div>
+                                <span className="text-[13px] font-bold text-neutral-800">Download Resume</span>
+                            </motion.a>
+                        )}
+                    </AnimatePresence>
                 </motion.div>
 
             </div>
@@ -153,15 +201,26 @@ const Navbar = () => {
                             </a>
                         ))}
                         <div className="h-px bg-neutral-100 my-1 mx-4" />
-                        <button
-                            onClick={() => {
-                                copyEmail();
-                            }}
-                            className="px-5 py-4 rounded-xl text-[14px] font-bold text-emerald-600 hover:bg-emerald-50 transition-colors uppercase flex items-center justify-center gap-2"
-                        >
-                            <span>Copy Email</span>
-                            {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
-                        </button>
+                        {!isProjectsSection ? (
+                            <button
+                                onClick={() => {
+                                    copyEmail();
+                                }}
+                                className="px-5 py-4 rounded-xl text-[14px] font-bold text-emerald-600 hover:bg-emerald-50 transition-colors uppercase flex items-center justify-center gap-2"
+                            >
+                                <span>Copy Email</span>
+                                {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+                            </button>
+                        ) : (
+                            <a
+                                href="/resume.pdf"
+                                download="Namal_Ekanayake_Resume.pdf"
+                                className="px-5 py-4 rounded-xl text-[14px] font-bold text-emerald-600 hover:bg-emerald-50 transition-colors uppercase flex items-center justify-center gap-2"
+                            >
+                                <span>Download Resume</span>
+                                <Download className="w-4 h-4" />
+                            </a>
+                        )}
                     </motion.div>
                 )}
             </AnimatePresence>
