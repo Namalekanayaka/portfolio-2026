@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
+import { ArrowRight } from 'lucide-react';
 
 type ProjectImage = {
     src: string;
@@ -213,6 +214,34 @@ export default function PortfolioProjects() {
                     </motion.div>
                 ))}
             </div>
+
+            {/* View More Button */}
+            <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-10%' }}
+                transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+                className="mt-20 md:mt-28 flex justify-center"
+            >
+                <motion.a
+                    href="https://github.com/namalekanayake"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    whileHover={{ scale: 1.04 }}
+                    whileTap={{ scale: 0.97 }}
+                    className="flex items-center gap-3 bg-white pl-5 pr-4 py-3 rounded-full shadow-[0_8px_30px_rgb(0,0,0,0.08)] border border-neutral-200/70 group cursor-pointer hover:shadow-[0_8px_40px_rgb(0,0,0,0.13)] transition-shadow duration-300"
+                >
+                    <span className="text-[13px] font-bold text-neutral-800 uppercase tracking-wide">View More Projects</span>
+                    <motion.div
+                        className="bg-black p-2 rounded-full"
+                        whileHover={{ rotate: -45 }}
+                        transition={{ duration: 0.2 }}
+                    >
+                        <ArrowRight className="w-3.5 h-3.5 text-white" />
+                    </motion.div>
+                </motion.a>
+            </motion.div>
+
         </section>
     );
 }
