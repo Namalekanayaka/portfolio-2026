@@ -60,7 +60,7 @@ export default function PortfolioProjects() {
     };
 
     return (
-        <section className="bg-white text-black w-full overflow-hidden py-24 md:py-32 flex flex-col items-center">
+        <section id="projects" className="bg-white text-black w-full overflow-hidden py-24 md:py-32 flex flex-col items-center">
 
             {/* Header Title with letter animation if desired, just simple opacity zoom for now */}
             <motion.div
