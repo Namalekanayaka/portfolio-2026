@@ -75,3 +75,14 @@
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+.footer-social-icon {
+  color: #666;
+  transition: color 0.2s ease;
+  display: flex;
+  align-items: center;
+}
+
+.footer-social-icon:hover {
+  color: #ffffff;
+}
