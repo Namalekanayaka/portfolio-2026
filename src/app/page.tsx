@@ -7,7 +7,7 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-black flex flex-col relative w-full">
       {/* Persisted Original 3D Shapes across Hero and About sections */}
-      <div className="fixed inset-0 z-[15] pointer-events-none">
+      <div className="fixed top-0 left-0 w-full h-[100dvh] z-[15] pointer-events-none">
         <FloatingShapes />
       </div>
 
