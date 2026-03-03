@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
+import { ArrowRight } from 'lucide-react';
 
 type ProjectImage = {
     src: string;
@@ -26,23 +27,23 @@ const projects: Project[] = [
         text1: "Developed a smart water management platform designed to connect citizens with water authorities through real-time reporting and intelligent analysis. The system improves response time, enhances transparency, and supports sustainable city management through data-driven decision-making.",
         text2: "Features a Mobile-First Citizen Portal for real-time issue mapping with geolocation, an Authority Dashboard with live issue tracking, and AI-Powered Analysis using Google Gemini AI for automated severity assessment and anomaly detection.",
         images: [
-            { src: "/aquaalert/1.png", aspect: "aspect-[4/3]" },
+            { src: "/aquaalert/1.png", aspect: "aspect-[16/9]" },
             { src: "/aquaalert/2.png", aspect: "aspect-[4/3]" },
-            { src: "/aquaalert/3.png", aspect: "aspect-[4/3]" },
-            { src: "/aquaalert/4.png", aspect: "aspect-[4/3]" }
+            { src: "/aquaalert/3.png", aspect: "aspect-[16/9]" },
+            { src: "/aquaalert/4.png", aspect: "aspect-[16/9]" }
         ]
     },
     {
-        tags: ["Brand Identity", "Web Design", "Illustration"],
-        titleBold: "Open Office:",
-        titleLight: " a friendly identity for the platform where businesses meet, share, and grow together",
-        text1: "Open Office is a leading project for business tours, guest visits, and partner meetings. The company values experience exchange as a driver of growth, while keeping a clear focus on key business metrics. At its core are trust, confidentiality, and genuine long-term relationships.",
-        text2: "The identity was crafted to invite openness and authentic dialogue. The office becomes more than a space — it's a place for dialogue, sharing, and passion for work. Serif and sans typography mix with smooth shapes, while lively office-life illustrations and a bold palette add energy.",
+        tags: ["TypeScript", "React.js", "Tailwind CSS", "Node.js", "Figma", "Git"],
+        titleBold: "Hansu Digital Agency:",
+        titleLight: " Official Website",
+        text1: "Designed and developed the official website for Hansu Digital Agency, a marketing agency focused on delivering web development, branding, and digital marketing solutions. The website emphasizes modern UI design, high performance, and seamless user experience across all devices.",
+        text2: "I focused on creating a clean, professional layout that reflects the agency’s brand identity while ensuring responsiveness, speed optimization, and smooth navigation.",
         images: [
-            { src: "https://images.unsplash.com/photo-1542435503-956c469947f6?q=80&w=800", aspect: "aspect-[3/4]", topBorderColor: "#749b82" },
-            { src: "https://images.unsplash.com/photo-1550529573-fc6913ed80be?q=80&w=800", aspect: "aspect-square", topBorderColor: "#ceb8aa" },
-            { src: "https://images.unsplash.com/photo-1572044162444-ad60f128bdea?q=80&w=800", aspect: "aspect-square", topBorderColor: "#ea7c42" },
-            { src: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?q=80&w=800", aspect: "aspect-[9/16]", topBorderColor: "#a3b2b0" }
+            { src: "/agency/11.png", aspect: "aspect-[16/9]" },
+            { src: "/agency/22.png", aspect: "aspect-[16/9]" },
+            { src: "/agency/33.png", aspect: "aspect-[16/9]" },
+            { src: "/agency/44.png", aspect: "aspect-[16/9]" }
         ]
     }
 ];
@@ -213,6 +214,34 @@ export default function PortfolioProjects() {
                     </motion.div>
                 ))}
             </div>
+
+            {/* View More Button */}
+            <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-10%' }}
+                transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+                className="mt-20 md:mt-28 flex justify-center"
+            >
+                <motion.a
+                    href="https://github.com/namalekanayake"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    whileHover={{ scale: 1.04 }}
+                    whileTap={{ scale: 0.97 }}
+                    className="flex items-center gap-3 bg-white pl-5 pr-4 py-3 rounded-full shadow-[0_8px_30px_rgb(0,0,0,0.08)] border border-neutral-200/70 group cursor-pointer hover:shadow-[0_8px_40px_rgb(0,0,0,0.13)] transition-shadow duration-300"
+                >
+                    <span className="text-[13px] font-bold text-neutral-800 uppercase tracking-wide">View More Projects</span>
+                    <motion.div
+                        className="bg-black p-2 rounded-full"
+                        whileHover={{ rotate: -45 }}
+                        transition={{ duration: 0.2 }}
+                    >
+                        <ArrowRight className="w-3.5 h-3.5 text-white" />
+                    </motion.div>
+                </motion.a>
+            </motion.div>
+
         </section>
     );
 }
