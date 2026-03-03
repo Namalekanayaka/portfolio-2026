@@ -1,6 +1,7 @@
 import Hero from '@/components/hero/Hero';
 import IconTextMorph from '@/components/sections/IconTextMorph';
 import PortfolioProjects from '@/components/sections/PortfolioProjects';
+import Contact from '@/components/sections/Contact';
 import FloatingShapes from '@/components/hero/FloatingShapes';
 
 export default function Home() {
@@ -24,6 +25,11 @@ export default function Home() {
       {/* Projects Section */}
       <div className="w-full relative z-20 bg-white">
         <PortfolioProjects />
+      </div>
+
+      {/* Contact Section */}
+      <div className="w-full relative z-20">
+        <Contact />
       </div>
     </main>
   );
