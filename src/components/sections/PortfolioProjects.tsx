@@ -20,16 +20,16 @@ type Project = {
 
 const projects: Project[] = [
     {
-        tags: ["Brand Identity", "Web Design", "Packaging"],
-        titleBold: "Avant-Garde Territory:",
-        titleLight: " visual language for telling the story of Ural's Avant-garde architecture in a modern way",
-        text1: "Avant-Garde Territory is a cultural project dedicated to preserving and promoting the Ural region's constructivist architecture. The project aims to reimagine the perception of the Avant-garde movement, giving it a modern look and turning this cultural legacy into a key tourist attraction.",
-        text2: "We created a flexible identity that merges Avant-garde principles with a modern approach, combining bold colors, geometric forms, and neo-grotesque typography. At its center stands the region's iconic constructivist building, reimagined as a graphic symbol of cultural continuity.",
+        tags: ["React (Vite)", "Tailwind", "Leaflet", "Socket.io", "Firebase"],
+        titleBold: "AquaAlert:",
+        titleLight: " Water Management Smart System",
+        text1: "Developed a smart water management platform designed to connect citizens with water authorities through real-time reporting and intelligent analysis. The system improves response time, enhances transparency, and supports sustainable city management through data-driven decision-making.",
+        text2: "Features a Mobile-First Citizen Portal for real-time issue mapping with geolocation, an Authority Dashboard with live issue tracking, and AI-Powered Analysis using Google Gemini AI for automated severity assessment and anomaly detection.",
         images: [
-            { src: "https://images.unsplash.com/photo-1549465220-1a8b9238cd48?q=80&w=800", aspect: "aspect-[3/4]" },
-            { src: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=800", aspect: "aspect-[4/5]" },
-            { src: "https://images.unsplash.com/photo-1576566588028-4147f3842f27?q=80&w=800", aspect: "aspect-square" },
-            { src: "https://images.unsplash.com/photo-1628155930542-3c7a64e2c833?q=80&w=800", aspect: "aspect-[4/3]" }
+            { src: "/aquaalert/1.png", aspect: "aspect-[4/3]" },
+            { src: "/aquaalert/2.png", aspect: "aspect-[4/3]" },
+            { src: "/aquaalert/3.png", aspect: "aspect-[4/3]" },
+            { src: "/aquaalert/4.png", aspect: "aspect-[4/3]" }
         ]
     },
     {
