@@ -180,7 +180,7 @@ export default function PortfolioProjects() {
                                     transition={{ duration: 0.8, delay: imgIdx * 0.15, ease: [0.22, 1, 0.36, 1] }}
                                     whileHover={{ y: -8, transition: { duration: 0.3, ease: 'easeOut' } }}
                                     key={imgIdx}
-                                    className="h-[350px] md:h-[480px] lg:h-[550px] shrink-0 snap-center flex flex-col gap-4 justify-end will-change-transform"
+                                    className="h-[55vw] sm:h-[350px] md:h-[480px] lg:h-[550px] shrink-0 snap-center flex flex-col gap-3 md:gap-4 justify-end will-change-transform"
                                 >
 
                                     {/* Optional Colored Top Border mimicking the design tabs */}
@@ -196,7 +196,7 @@ export default function PortfolioProjects() {
                                     )}
 
                                     {/* Image Container */}
-                                    <div className={`h-full relative rounded-xl overflow-hidden bg-black/5 border border-black/5 shadow-2xl ${img.aspect} group cursor-pointer`}>
+                                    <div className={`w-auto h-full relative rounded-xl overflow-hidden bg-black/5 border border-black/5 shadow-2xl ${img.aspect} group cursor-pointer`}>
                                         <div className="absolute inset-0 bg-black/20 z-10 group-hover:bg-transparent transition-colors duration-500" />
                                         <img
                                             src={img.src}
