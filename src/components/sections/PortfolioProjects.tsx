@@ -45,10 +45,25 @@ const projects: Project[] = [
             { src: "/agency/33.png", aspect: "aspect-[16/9]" },
             { src: "/agency/44.png", aspect: "aspect-[16/9]" }
         ]
+    },
+    {
+        tags: ["React", "Tailwind CSS", "Node.js", "Express.js", "MySQL", "Figma"],
+        titleBold: "myClinic:",
+        titleLight: " Medical Center POS System",
+        text1: "An all-in-one POS system designed for Dr. Dhammika Yatigammana, specifically tailored to streamline operations within a medical center. It bridges clinical and pharmacy functions, offering a seamless workflow for doctors, pharmacy staff, and administration.",
+        text2: "Features include real-time performance metrics via a dashboard, patient profile management with visit records, a comprehensive inventory control system for medications, and an integrated pharmacy module for efficient prescription billing.",
+        images: [
+            { src: "/myclinic/1.jpg", aspect: "aspect-[16/9]" },
+            { src: "/myclinic/2.jpg", aspect: "aspect-[16/9]" },
+            { src: "/myclinic/3.jpg", aspect: "aspect-[16/9]" },
+            { src: "/myclinic/4.jpg", aspect: "aspect-[16/9]" }
+        ]
     }
 ];
 
 export default function PortfolioProjects() {
+    const [showAll, setShowAll] = React.useState(false);
+
     // Animation variants
     const titleVariants: any = {
         hidden: { opacity: 0, y: 50, filter: 'blur(10px)' },
@@ -59,6 +74,8 @@ export default function PortfolioProjects() {
             transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] }
         }
     };
+
+    const visibleProjects = showAll ? projects : projects.slice(0, 2);
 
     return (
         <section id="projects" className="bg-white text-black w-full overflow-hidden py-24 md:py-32 flex flex-col items-center">
@@ -75,7 +92,7 @@ export default function PortfolioProjects() {
             </motion.div>
 
             <div className="w-full max-w-[1800px] flex flex-col gap-24 md:gap-32 px-6 md:px-12 lg:px-20 mx-auto">
-                {projects.map((project, idx) => (
+                {visibleProjects.map((project, idx) => (
                     <motion.div
                         initial={{ opacity: 0, y: 40 }}
                         whileInView={{ opacity: 1, y: 0 }}
@@ -180,7 +197,7 @@ export default function PortfolioProjects() {
                                     transition={{ duration: 0.8, delay: imgIdx * 0.15, ease: [0.22, 1, 0.36, 1] }}
                                     whileHover={{ y: -8, transition: { duration: 0.3, ease: 'easeOut' } }}
                                     key={imgIdx}
-                                    className="h-[350px] md:h-[480px] lg:h-[550px] shrink-0 snap-center flex flex-col gap-4 justify-end will-change-transform"
+                                    className="h-[55vw] sm:h-[350px] md:h-[480px] lg:h-[550px] shrink-0 snap-center flex flex-col gap-3 md:gap-4 justify-end will-change-transform"
                                 >
 
                                     {/* Optional Colored Top Border mimicking the design tabs */}
@@ -196,7 +213,7 @@ export default function PortfolioProjects() {
                                     )}
 
                                     {/* Image Container */}
-                                    <div className={`h-full relative rounded-xl overflow-hidden bg-black/5 border border-black/5 shadow-2xl ${img.aspect} group cursor-pointer`}>
+                                    <div className={`w-auto h-full relative rounded-xl overflow-hidden bg-black/5 border border-black/5 shadow-2xl ${img.aspect} group cursor-pointer`}>
                                         <div className="absolute inset-0 bg-black/20 z-10 group-hover:bg-transparent transition-colors duration-500" />
                                         <img
                                             src={img.src}
@@ -221,25 +238,43 @@ export default function PortfolioProjects() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-10%' }}
                 transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-                className="mt-20 md:mt-28 flex justify-center"
+                className="mt-20 md:mt-28 flex flex-col items-center gap-6"
             >
-                <motion.a
-                    href="https://github.com/namalekanayake"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    whileHover={{ scale: 1.04 }}
-                    whileTap={{ scale: 0.97 }}
-                    className="flex items-center gap-3 bg-white pl-5 pr-4 py-3 rounded-full shadow-[0_8px_30px_rgb(0,0,0,0.08)] border border-neutral-200/70 group cursor-pointer hover:shadow-[0_8px_40px_rgb(0,0,0,0.13)] transition-shadow duration-300"
-                >
-                    <span className="text-[13px] font-bold text-neutral-800 uppercase tracking-wide">View More Projects</span>
-                    <motion.div
-                        className="bg-black p-2 rounded-full"
-                        whileHover={{ rotate: -45 }}
-                        transition={{ duration: 0.2 }}
+                {!showAll ? (
+                    <motion.button
+                        onClick={() => setShowAll(true)}
+                        whileHover={{ scale: 1.04 }}
+                        whileTap={{ scale: 0.97 }}
+                        className="flex items-center gap-3 bg-white pl-5 pr-4 py-3 rounded-full shadow-[0_8px_30px_rgb(0,0,0,0.08)] border border-neutral-200/70 group cursor-pointer hover:shadow-[0_8px_40px_rgb(0,0,0,0.13)] transition-shadow duration-300"
                     >
-                        <ArrowRight className="w-3.5 h-3.5 text-white" />
-                    </motion.div>
-                </motion.a>
+                        <span className="text-[13px] font-bold text-neutral-800 uppercase tracking-wide">View More Projects</span>
+                        <motion.div
+                            className="bg-black p-2 rounded-full"
+                            whileHover={{ rotate: 90 }}
+                            transition={{ duration: 0.2 }}
+                        >
+                            <ArrowRight className="w-3.5 h-3.5 text-white" />
+                        </motion.div>
+                    </motion.button>
+                ) : (
+                    <motion.a
+                        href="https://github.com/namalekanayake"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        whileHover={{ scale: 1.04 }}
+                        whileTap={{ scale: 0.97 }}
+                        className="flex items-center gap-3 bg-white pl-5 pr-4 py-3 rounded-full shadow-[0_8px_30px_rgb(0,0,0,0.08)] border border-neutral-200/70 group cursor-pointer hover:shadow-[0_8px_40px_rgb(0,0,0,0.13)] transition-shadow duration-300"
+                    >
+                        <span className="text-[13px] font-bold text-neutral-800 uppercase tracking-wide">Explore more on GitHub</span>
+                        <motion.div
+                            className="bg-black p-2 rounded-full"
+                            whileHover={{ rotate: -45 }}
+                            transition={{ duration: 0.2 }}
+                        >
+                            <ArrowRight className="w-3.5 h-3.5 text-white" />
+                        </motion.div>
+                    </motion.a>
+                )}
             </motion.div>
 
         </section>
