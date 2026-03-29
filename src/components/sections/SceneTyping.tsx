@@ -69,33 +69,37 @@ export default function SceneTyping() {
       move(14.5, 18, 0, 0, 0, 1);
 
       scene.set({
-        "[data-typing='i']": SceneAny.typing({ text: 'I ', duration: 1 }),
-        "[data-typing='frontend']": {
-          1: SceneAny.typing({ text: "'m Front-End", duration: 1 }),
-        },
-        "[data-typing='engineer']": {
-          1.5: SceneAny.typing({ text: 'Engineer', duration: 1 }),
-        },
+        "[data-typing='intro']": SceneAny.typing({
+          text: "I'm a Front-End Engineer",
+          duration: 1.5
+        }),
+
         "[data-typing='with']": {
-          3.3: SceneAny.typing({ text: 'with', duration: 0.5 }),
+          1.8: SceneAny.typing({
+            text: "with",
+            duration: 0.5
+          }),
         },
-        "[data-typing='javascript']": {
-          4.5: SceneAny.typing({ text: 'JavaScript', duration: 1 }),
+
+        "[data-typing='skills1']": {
+          2.5: SceneAny.typing({
+            text: "JavaScript, TypeScript, CSS,",
+            duration: 1.5
+          }),
         },
-        "[data-typing='typescript']": {
-          6: SceneAny.typing({ text: 'TypeScript', duration: 1 }),
+
+        "[data-typing='skills2']": {
+          4.2: SceneAny.typing({
+            text: "Node.js, Animations, Scene.js",
+            duration: 1.5
+          }),
         },
-        "[data-typing='css']": {
-          7.5: SceneAny.typing({ text: 'CSS', duration: 0.7 }),
-        },
-        "[data-typing='nodejs']": {
-          9: SceneAny.typing({ text: 'Node.js', duration: 1 }),
-        },
-        "[data-typing='animation']": {
-          10.5: SceneAny.typing({ text: 'Animation', duration: 1 }),
-        },
-        "[data-typing='scenejs']": {
-          12: SceneAny.typing({ text: 'Scene.js', duration: 1 }),
+
+        "[data-typing='cta']": {
+          6.2: SceneAny.typing({
+            text: "Scroll down to contact me ↓",
+            duration: 1.5
+          }),
         },
       });
 
