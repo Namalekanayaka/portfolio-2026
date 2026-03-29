@@ -28,8 +28,8 @@ export default function Home() {
         <PortfolioProjects />
       </div>
 
-      {/* Scene.js Typing Animation Section */}
-      <div className="w-full relative z-20">
+      {/* Skills Text-Fill Section */}
+      <div className="w-full relative z-25">
         <SceneTyping />
       </div>
 

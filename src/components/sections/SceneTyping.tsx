@@ -1,168 +1,80 @@
 'use client';
 
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-export default function SceneTyping() {
+gsap.registerPlugin(ScrollTrigger);
+
+const skills = [
+  'React.js',
+  'Next.js',
+  'TypeScript',
+  'Node.js',
+  'Express.js',
+  'MySQL',
+  'Firebase',
+  'Tailwind CSS',
+  'Figma',
+  'UI / UX Design',
+  'Socket.io',
+  'Git & GitHub',
+];
+
+export default function SkillsTextFill() {
+  const sectionRef = useRef<HTMLElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  const sceneRef = useRef<unknown>(null);
 
   useEffect(() => {
-    // Dynamically import to avoid SSR issues
-    Promise.all([
-      import('scenejs'),
-      import('@scenejs/effects'),
-    ]).then(([SceneModule, EffectsModule]) => {
-      const Scene = (SceneModule as { default: typeof SceneModule.default }).default ?? SceneModule.default;
-      const Effects = EffectsModule as { typing?: (...args: unknown[]) => unknown; kineticFrame?: (...args: unknown[]) => unknown };
+    const ctx = gsap.context(() => {
+      gsap.set('.skills-text-fill', { backgroundSize: '0%' });
 
-      // Attach typing & kineticFrame to Scene object so original API works
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const SceneAny = Scene as any;
-      if (Effects.typing) SceneAny.typing = Effects.typing;
-      if (Effects.kineticFrame) SceneAny.kineticFrame = Effects.kineticFrame;
+      const textElements = gsap.utils.toArray<HTMLElement>('.skills-text-fill');
 
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const scene: any = new SceneAny(
-        {
-          '.scene-typing-container': {},
-        },
-        {
-          selector: true,
-        }
-      );
-
-      // Override selector scope to our section's container
-      // Scene.js uses document.querySelector by default — we scope via our ref
-      const item = scene.getItem('.scene-typing-container');
-
-      function move(
-        startTime: number,
-        endTime: number,
-        left: number,
-        top: number,
-        rotate: number,
-        scale: number
-      ) {
-        item.set({
-          [`${startTime}, ${endTime}`]: SceneAny.kineticFrame({
-            left: `${left}px`,
-            top: `${top}px`,
-          }).set({
-            transform: {
-              rotate: `${rotate}deg`,
-              scale,
+      textElements.forEach((text) => {
+        gsap.fromTo(
+          text,
+          { backgroundSize: '0%' },
+          {
+            backgroundSize: '100%',
+            ease: 'none',
+            scrollTrigger: {
+              trigger: text,
+              start: 'center 95%',
+              end: 'center 45%',
+              scrub: true,
             },
-          }),
-        });
-      }
-
-      move(0, 0, 90, 115, 0, 5);
-      move(1, 1, 90, 115, 0, 2);
-      move(2, 3, 0, 115, 0, 1);
-      move(4, 4.5, -100, 0, -90, 2);
-      move(5.5, 6, -52, -18, -90, 1.6);
-      move(7, 7.5, 30, 45, 0, 2);
-      move(8.5, 9, 10, 30, 0, 3);
-      move(10, 10.5, 28, 0, 0, 2.2);
-      move(11.5, 12, 50, -35, 0, 1.65);
-      move(13, 13.5, 35, -70, 0, 2);
-      move(14.5, 18, 0, 0, 0, 1);
-
-      scene.set({
-        "[data-typing='intro']": SceneAny.typing({
-          text: "I'm a Front-End Engineer",
-          duration: 1.5
-        }),
-
-        "[data-typing='with']": {
-          1.8: SceneAny.typing({
-            text: "with",
-            duration: 0.5
-          }),
-        },
-
-        "[data-typing='skills1']": {
-          2.5: SceneAny.typing({
-            text: "JavaScript, TypeScript, CSS,",
-            duration: 1.5
-          }),
-        },
-
-        "[data-typing='skills2']": {
-          4.2: SceneAny.typing({
-            text: "Node.js, Animations, Scene.js",
-            duration: 1.5
-          }),
-        },
-
-        "[data-typing='cta']": {
-          6.2: SceneAny.typing({
-            text: "Scroll down to contact me ↓",
-            duration: 1.5
-          }),
-        },
+          }
+        );
       });
+    }, sectionRef);
 
-      scene.setPlaySpeed(1);
-      scene.setEasing('ease-in-out');
-      scene.setIterationCount('infinite');
-      scene.play();
-
-      sceneRef.current = scene;
-    });
-
-    return () => {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      (sceneRef.current as any)?.stop?.();
-    };
+    return () => ctx.revert();
   }, []);
 
   return (
     <section
-      id="scene-typing"
-      className="scene-typing-section"
+      ref={sectionRef}
+      id="skills"
+      className="skills-section"
     >
-      <div className="scene-typing-wrapper" ref={containerRef}>
-        <div className="scene-typing-container">
-          <a
-            href="https://github.com/daybrush"
-            target="_blank"
-            rel="noreferrer"
-            data-typing="i"
+      {/* Section Header */}
+      <div className="skills-header">
+        <p className="skills-eyebrow">What I work with</p>
+        <h2 className="skills-heading">My Skills</h2>
+      </div>
+
+      {/* Scrollable skill lines */}
+      <div ref={containerRef} className="skills-list">
+        {skills.map((skill, i) => (
+          <h2
+            key={i}
+            className="skills-text-fill"
+            data-index={i}
           >
-            I
-          </a>
-          <a
-            href="https://github.com/daybrush"
-            target="_blank"
-            rel="noreferrer"
-            data-typing="frontend"
-          >
-            &apos;m Front-End
-          </a>
-          <a
-            href="https://github.com/daybrush"
-            target="_blank"
-            rel="noreferrer"
-            data-typing="engineer"
-          >
-            Engineer
-          </a>
-          <p data-typing="with">with</p>
-          <p data-typing="javascript">JavaScript</p>
-          <p data-typing="typescript">TypeScript</p>
-          <p data-typing="css">CSS</p>
-          <p data-typing="nodejs">Node.js</p>
-          <p data-typing="animation">Animation</p>
-          <a
-            href="https://github.com/daybrush/scenejs"
-            target="_blank"
-            rel="noreferrer"
-            data-typing="scenejs"
-          >
-            Scene.js
-          </a>
-        </div>
+            {skill}
+          </h2>
+        ))}
       </div>
     </section>
   );
