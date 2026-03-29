@@ -86,3 +86,103 @@
 .footer-social-icon:hover {
   color: #ffffff;
 }
+
+
+/* ============================================================
+   Skills Text-Fill Section (GSAP ScrollTrigger)
+   ============================================================ */
+
+/* CSS custom properties for the effect */
+.skills-section {
+  --text-color: rgba(250, 250, 250, 0.15);
+  --text-stroke-color: rgba(250, 250, 250, 0.55);
+  --text-fill-color: #ffffff;
+}
+
+.skills-section {
+  position: relative;
+  width: 100%;
+  /* Tall enough for the scroll animation to breathe */
+  padding: 180px 0 200px;
+  background-color: #131313;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+/* Header block */
+.skills-header {
+  width: 100%;
+  padding: 0 6vw 80px;
+}
+
+.skills-eyebrow {
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Inter',
+               'Helvetica Neue', Arial, sans-serif;
+  font-size: clamp(11px, 1.2vw, 14px);
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.4);
+  margin: 0 0 14px;
+}
+
+.skills-heading {
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text',
+               'Inter', 'Helvetica Neue', Arial, sans-serif;
+  font-size: clamp(2rem, 5vw, 4rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: rgba(255,255,255,0.18);
+  /* Same fill effect as the skill lines but always at 100% */
+  background: linear-gradient(to right, #ffffff, #ffffff) no-repeat;
+  -webkit-background-clip: text;
+  background-clip: text;
+  background-size: 100%;
+  -webkit-text-stroke: 0.05rem rgba(255,255,255,0.5);
+  text-stroke: 0.05rem rgba(255,255,255,0.5);
+  margin: 0;
+  line-height: 1.15;
+}
+
+/* Container that holds all skill lines */
+.skills-list {
+  width: 100%;
+  padding: 0 6vw;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* Each scrollable skill line — exact original effect */
+.skills-text-fill {
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text',
+               'Inter', 'Helvetica Neue', Arial, sans-serif;
+  font-size: clamp(2.8rem, 8vw, 9vw);
+  font-weight: 900;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+  margin: 0;
+
+  /* Ghost / unfilled state */
+  color: var(--text-color);
+  -webkit-text-stroke: 0.06rem var(--text-stroke-color);
+  text-stroke: 0.06rem var(--text-stroke-color);
+
+  /* Fill state driven by GSAP backgroundSize */
+  background: linear-gradient(
+      to right,
+      var(--text-fill-color),
+      var(--text-fill-color)
+    )
+    no-repeat left center;
+  -webkit-background-clip: text;
+  background-clip: text;
+  background-size: 0%;
+  transition: background-size cubic-bezier(0.1, 0.5, 0.5, 1) 0.5s;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  will-change: background-size;
+}
